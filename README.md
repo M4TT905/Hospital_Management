@@ -1,25 +1,60 @@
-This is Group 11's Hospital Management System
+# Hospital Management System
 
-To run it you need to have docker desktop installed, preferably in a linux environment, but it should work on windows as well
+A distributed hospital operations platform built on a C++ microservices backend with gRPC, offering both a web GUI and a terminal CLI for managing patients, staff, rooms, and resources in real time.
 
-There are two types of front ends available to use:
-  The GUI front end which has a web page with easier accessibility, but more limited functionality
-      or
-  The CLI front end which has a terminal text based front end that has complete functionality, but is a little harder to use
+## Demo
 
-In order to run the program you just need to execute run.sh in a bash shell (linux/MacOS) or in a git bash shell (Windows)
+![Demo](demo.gif)
 
-For the GUI front end run
+## Why We Built It
 
-$ ./run.sh <opt>
-or
-$ bash run.sh <opt>
+Hospital operations involve tightly coupled workflows across departments that break down quickly without reliable coordination. This system decouples those concerns into independently deployable services that communicate over gRPC, making each domain (patients, staff, rooms, resources, scheduling) fault-isolated and independently scalable. The technically interesting challenge was designing a shared Protobuf contract layer that both a C++ CLI and a Python/FastAPI web frontend could consume without duplication.
 
-where opt can be either cli or gui depending on what you want
-example:
-$ ./run.sh cli
+## Tech Stack
 
-Please note that the initial setup requires a stable internet connection, as docker will download the base image from a repo
-Inital setup may take a while and the more RAM & cores you have allocated to docker will speed up the setup.
+| Layer | Technology |
+|---|---|
+| Backend services | C++17, CMake |
+| Inter-service communication | gRPC + Protocol Buffers |
+| GUI frontend | Python, FastAPI, HTML/JS |
+| CLI frontend | C++ |
+| Persistence | JSON file store per service |
+| Orchestration | Docker Compose (7 containers) |
 
-*** INITIAL SETUP COULD TAKE OVER AN HOUR ***
+## Features
+
+- Manage patient records: admit, discharge, and track patient status across the system
+- Allocate and monitor hospital rooms with real-time availability tracking
+- Control medical resource inventory and flag shortages before they occur
+- Schedule and manage staff assignments across shifts and departments
+- Choose between a browser-based GUI (port 8920) or a full-featured terminal CLI
+- One-command startup via `run.sh` with Docker handling all build and dependency setup
+
+## How to Run
+
+**Prerequisites:** Docker Desktop installed. A stable internet connection is required on first run -- Docker pulls and compiles the base image, which can take over an hour depending on your machine's RAM and CPU allocation.
+
+**Start the system:**
+
+```bash
+# GUI (web frontend at http://localhost:8920)
+./run.sh gui
+
+# CLI (terminal interface)
+./run.sh cli
+```
+
+On Windows, run via Git Bash:
+
+```bash
+bash run.sh gui
+```
+
+The `run.sh` script builds all service images and starts the full stack via Docker Compose. No manual dependency installation required.
+
+## Contributors
+
+- [Victor S](https://github.com/amiothenes)
+- [Matthew H](https://github.com/M4TT905)
+- [Olamide T](https://github.com/olamidetim21)
+- [Hachi N](https://github.com/hachy-kc)
