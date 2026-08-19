@@ -14,7 +14,7 @@ Hospital operations involve tightly coupled workflows across departments that br
 
 | Layer | Technology |
 |---|---|
-| Backend services | C++17, CMake |
+| Backend services | C++23, CMake |
 | Inter-service communication | gRPC + Protocol Buffers |
 | GUI frontend | Python, FastAPI, HTML/JS |
 | CLI frontend | C++ |
